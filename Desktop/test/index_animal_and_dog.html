@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+
+    <script>
+        //parent's constructor
+        function Animal(name) {
+            this.name = name;
+        }
+
+        //parent's method in the prototype
+        Animal.prototype.getName = function() {
+            return this.name;
+        };
+
+        //child's constructor
+        function Dog(name) {
+            Animal.apply(this, arguments);
+        }
+
+        //inheritance
+        Dog.prototype = Object.create(Animal.prototype);
+        Dog.prototype.constructor = Dog;
+
+        //child's method, includes the call of parent's method
+        Dog.prototype.bark = function() {
+            return 'Dog ' + Animal.prototype.getName.call(this) + ' is barking';
+        }
+
+        //creating new dog instance
+        var dog = new Dog('Aban');
+        document.write('dog.getName() === Aban');
+        document.write('<br>');
+        document.write(dog.getName() === 'Aban');
+        document.write('<br>');
+        document.write('dog.bark() === Dog Aban is barking');
+        document.write('<br>');
+        document.write(dog.bark() === 'Dog Aban is barking');
+    </script>
+</body>
+
+</html>
